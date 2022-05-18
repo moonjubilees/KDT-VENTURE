@@ -1,2 +1,2 @@
 # KDT-VENTURE
-Multicampus FullStack Development Learn Course
+Multicampus FullStack Development Learning Course
