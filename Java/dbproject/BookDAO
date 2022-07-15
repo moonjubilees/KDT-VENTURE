@@ -1,0 +1,108 @@
+package dbProject;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+
+
+public class BookDAO {
+	public int insertBook(BookDTO dto){
+		Connection conn = null; 
+		int rows = 0; //이게 뜻하는건 뭘까? 
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/employeesdb", "emp", "emp");
+			
+			String insertSQL = "insert into book values(?, ?, ?, ?, ?, ?)"; //아까처럼 숫자가 늘어나는게 아니라 문자와 결합되어있는데 앞에 null? 
+			
+			/* update 테이블명 set 변경컬럼명 = ? where 컬럼명 ? limit ? */
+			/* delete from 테이블명 where 컬럼명 > ? and 컬럼명 < ? */
+			
+			PreparedStatement pt = conn.prepareStatement(insertSQL); //db 전송 구문분석 컴파일 - 저장
+			//sql 입력파라미터 값 설정 
+			 pt.setString(1, dto.getNumber()); 
+			 pt.setString(2, dto.getTitle()); 
+			 pt.setString(3, dto.getAuthor()); 
+			 pt.setInt(4, dto.getYear()); 
+			 pt.setInt(5, dto.getPrice()); 
+			 pt.setString(6, dto.getPublisher()); 
+
+			
+			rows = pt.executeUpdate(); 
+			System.out.println(rows + " 개의 행 삽입 완료");
+			
+			conn.close ();
+			}
+		catch(ClassNotFoundException e) {
+			System.out.println("mysql driver 미설치 또는 드라이버이름 오류");
+		}
+			catch(SQLException e) {
+				System.out.println("db접속오류이거나 sql문장오류");
+				e.printStackTrace();
+			}
+			finally {
+				try {
+				conn.close(); //close가 예외처리한다라고 해줘야함. 
+				}catch (SQLException e) {}
+			}
+			return rows ; //리턴타입 로우로 했으니까
+		
+	}//insertBook method
+	
+	public BookDTO[] selectBook() {
+		//book 테이블의 모든 데이터 조회 구현 
+	
+	Connection conn = null; 
+	BookDTO[] ar = new BookDTO[6];
+	try {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/employeesdb", "emp", "emp");
+		
+		//명령행 매개변수 5개 입력 - 이자바 java@b.com 01022246788 법학 us
+		String selectSQL = "select * from book";
+		
+		/* update 테이블명 set 변경컬럼명 = ? where 컬럼명 ? limit ? */
+		/* delete from 테이블명 where 컬럼명 > ? and 컬럼명  ? */
+		
+		PreparedStatement pt = conn.prepareStatement(selectSQL); //db 전송 구문분석 컴파일 - 저장
+		//sql 입력파라미터 값 설정 
+		
+		ResultSet rs = pt.executeQuery();  //<- 여기서 실행할거야. sql은 미리 지정됐음. 
+		int index = 0;
+		while(rs.next()) {
+			BookDTO dto = new BookDTO(rs.getString("bookNo"),rs.getString("bookTitle"), rs.getString("bookAuthor"), rs.getInt("bookYear"), rs.getInt("bookPrice"), rs.getString("bookPublisher"));
+					
+					
+		ar[index++] = dto ;
+			// index ++; 위에 index++이랑 똑같애 
+		}
+		
+		rs.close();
+		pt.close();
+		
+		
+		
+		
+		conn.close ();//db 연결 해제하는 부분 (파일; close, 소켓통신 ;close)
+		}
+	catch(ClassNotFoundException e) {
+		System.out.println("mysql driver 미설치 또는 드라이버이름 오류");
+	}
+		catch(SQLException e) {
+			System.out.println("db접속오류이거나 sql문장오류");
+			e.printStackTrace();
+		}
+		finally {
+			try {
+			conn.close(); //close가 예외처리한다라고 해줘야함. 
+			}catch (SQLException e) {}
+		}
+		return ar ; //리턴타입 로우로 했으니까
+	
+	}
+	
+	
+}//public class end
