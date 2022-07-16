@@ -1,0 +1,122 @@
+package dbProject;
+
+public class BookDTO {
+	
+	String Number; 
+	String Title;
+	String Author;
+	int Year;
+	int Price; 
+	String Publisher;
+	//생성자
+	//밑에 public도 꼭 있어야 함 
+	
+	public BookDTO(String number, String title, String author, int year, int price, String publisher) {
+		super();
+		Number = number;
+		Title = title;
+		Author = author;
+		Year = year;
+		Price = price;
+		Publisher = publisher;
+	}
+
+
+	/**
+	 * @return the number
+	 */
+	public String getNumber() {
+		return Number;
+	}
+
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(String number) {
+		Number = number;
+	}
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return Title;
+	}
+
+	/**
+	 * @param title the title to set
+	 */
+	public void setTitle(String title) {
+		Title = title;
+	}
+
+	/**
+	 * @return the author
+	 */
+	public String getAuthor() {
+		return Author;
+	}
+
+	/**
+	 * @param author the author to set
+	 */
+	public void setAuthor(String author) {
+		Author = author;
+	}
+
+	/**
+	 * @return the year
+	 */
+	public int getYear() {
+		return Year;
+	}
+
+	/**
+	 * @param year the year to set
+	 */
+	public void setYear(int year) {
+		Year = year;
+	}
+
+	/**
+	 * @return the price
+	 */
+	public int getPrice() {
+		return Price;
+	}
+
+	/**
+	 * @param price the price to set
+	 */
+	public void setPrice(int price) {
+		Price = price;
+	}
+
+	/**
+	 * @return the publisher
+	 */
+	public String getPublisher() {
+		return Publisher;
+	}
+
+	/**
+	 * @param publisher the publisher to set
+	 */
+	public void setPublisher(String publisher) {
+		Publisher = publisher;
+	}
+
+	@Override
+	public String toString() {
+		return  Number + "\t" +  Title + "\t" + Author + "\t" + Year + "\t" +
+				+ Price + "\t" +Publisher ;
+	}
+	
+	
+	
+	
+	
+
+	
+
+}//class end
